@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IVP - 영화 상세 정보</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/header::header"/>
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col-2"></div>
+        <div class="col-2">
+            <img th:src="@{/images/movie/{poster}(poster=${movie.poster})}" style="width: 197px; height: 260px;">
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <p style="font-size: 24px; font-color: gray; font-weight: 550;">[[${movie.name}]]</p>
+            </div>
+            <div class="row ">
+                <div>감독 : [[${movie.director}]] / 배우 : [[${movie.actors}]]</div>
+                <div>장르 : [[${movie.genre}]] / 기본 : [[${movie.rating}]], [[${movie.runningTime}]], [[${movie.nation}]]</div>
+                <div>개봉 : [[${movie.releaseDate}]]</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 py-4" style="background-color: #f6f6f6;">
+            <p th:utext="${movie.summary}" style="font-size: 14px;"></p>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <p>스틸컷 <span id="imageIdx">1</span> / <span id="totalImage" th:text="${movie.photos.size()}"></span></p>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col-2"></div>
+        <div class="col-1" style="height: 450px;">
+            <table style="height: 450px; width: 100%; vertical-align: middle;">
+                <tr><td style="text-align:center">
+                    <button type="button" class="btn"><img id="btn-prev" src="/images/btn_prev.jpg" width="26px" height="52px" style="display: block; margin: auto;" /></button>
+                </td></tr>
+            </table>
+        </div>
+        <div class="col-6" style="height: 450px;">
+            <table style="height: 450px; width: 100%; vertical-align: middle;">
+                <tr><td style="text-align:center">
+                    <img class="stealImage" th:each="imageName : ${movie.photos}" th:src="@{/images/movie/{name}(name=${imageName})}" style="max-width: 100%; max-height: 450px; display: none;" />
+                </td></tr>
+            </table>
+
+        </div>
+        <div class="col-1" style="height: 450px;">
+            <table style="height: 450px; width: 100%; vertical-align: middle;">
+                <tr><td style="text-align:center">
+                    <button type="button" class="btn"><img id="btn-next" src="/images/btn_next.jpg" width="26px" height="52px" style="display: block; margin: auto;" /></button>
+                </td></tr>
+            </table>
+        </div>
+        <div class="imagePath" style="display: none;" th:each="path : ${movie.photos}">[[${path}]]</div>
+    </div>
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+var main = {
+    init : function() {
+        var _this = this;
+        $('.stealImage').get()[0].style.display = 'inline';
+        $('#btn-prev').on('click', function() {
+            _this.prev();
+        });
+        $('#btn-next').on('click', function() {
+            _this.next();
+        });
+    },
+    prev : function() {
+        var imageIdx = Number($('#imageIdx').get()[0].innerText);
+        var prevIdx = imageIdx - 1;
+        if (prevIdx == 0) {
+            prevIdx = Number($('#totalImage').get()[0].innerText);
+        }
+
+        $('.stealImage').get()[imageIdx-1].style.display = 'none';
+        $('.stealImage').get()[prevIdx-1].style.display = 'inline';
+        $('#imageIdx').get()[0].innerText = prevIdx;
+    },
+    next : function() {
+        var imageIdx = Number($('#imageIdx').get()[0].innerText);
+        var nextIdx = imageIdx + 1;
+        if (nextIdx > Number($('#totalImage').get()[0].innerText)) {
+            nextIdx = 1;
+        }
+
+        $('.stealImage').get()[imageIdx-1].style.display = 'none';
+        $('.stealImage').get()[nextIdx-1].style.display = 'inline';
+        $('#imageIdx').get()[0].innerText = nextIdx;
+    }
+}
+
+main.init();
+</script>
+
+</body>
+</html>

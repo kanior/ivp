@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>IVP - 회원가입</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .row {
+            margin: 0px 0px 15px 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="py-5 text-center">
+        <h2 th:text="#{page.saveForm}">회원 가입</h2>
+    </div>
+
+    <form action="item.html" th:action th:object="${user}" method="post">
+        <div class="row">
+            <label for="loginId" th:text="#{label.user.loginId}">아이디</label>
+            <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error" class="form-control" th:placeholder="#{placeholder.user.loginId}">
+            <div class="field-error" th:errors="*{loginId}">
+                아이디 오류
+            </div>
+        </div>
+        <div class="row">
+            <label for="password" th:text="#{label.user.password}">비밀번호</label>
+            <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" class="form-control" th:placeholder="#{placeholder.user.password}">
+            <div class="field-error" th:errors="*{password}">
+                비밀번호 오류
+            </div>
+        </div>
+        <div class="row">
+            <label for="passwordCheck" th:text="#{label.user.passwordCheck}">비밀번호 확인</label>
+            <input type="password" id="passwordCheck" th:field="*{passwordCheck}" th:errorclass="field-error" class="form-control" th:placeholder="#{placeholder.user.passwordCheck}">
+            <div class="field-error" th:errors="*{passwordCheck}">
+                비밀번호 확인 오류
+            </div>
+        </div>
+        <div class="row">
+            <label for="name" th:text="#{label.user.name}">이름</label>
+            <input type="text" id="name" th:field="*{name}" th:errorclass="field-error" class="form-control" th:placeholder="#{placeholder.user.name}">
+            <div class="field-error" th:errors="*{name}">
+                이름 오류
+            </div>
+        </div>
+        <div class="row">
+            <label for="birthDate" th:text="#{label.user.birthDate}">생년월일</label>
+            <input type="text" id="birthDate" th:field="*{birthDate}" th:errorclass="field-error" class="form-control" th:placeholder="#{placeholder.user.birthDate}">
+            <div class="field-error" th:errors="*{birthDate}">
+                생년월일 오류
+            </div>
+        </div>
+
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메시지</p>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">회원 가입</button>
+            </div>
+            <div class="col">
+                <a class="w-100 btn btn-secondary btn-lg" href="/" role="button" th:text="#{button.cancel}">취소</a>
+            </div>
+        </div>
+
+    </form>
+
+</div> <!-- /container -->
+</body>
+</html>
