@@ -19,7 +19,7 @@ public class Screen {
     private String name;
 
     @Column(nullable = false)
-    private Integer seating_capacity;
+    private Integer seatingCapacity;
 
     @Column(nullable = false)
     private String seatType;
@@ -27,4 +27,7 @@ public class Screen {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id", nullable = false)
     private Theater theater;
+
+    @Column(nullable = false)
+    private Integer seatPrice;
 }

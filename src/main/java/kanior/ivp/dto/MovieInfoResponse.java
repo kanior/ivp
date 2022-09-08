@@ -5,12 +5,10 @@ import kanior.ivp.entity.Movie;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
-public class MovieDetailResponse {
+public class MovieInfoResponse {
 
     private Long id;
 
@@ -36,7 +34,7 @@ public class MovieDetailResponse {
 
     private String summary;
 
-    public MovieDetailResponse(Movie movie, List<Actor> actorList) {
+    public MovieInfoResponse(Movie movie, List<Actor> actorList) {
         this.id = movie.getId();
         this.name = movie.getName();
         this.director = movie.getDirector();

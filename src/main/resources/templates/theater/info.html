@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IVP - 극장 정보</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/header::header"/>
+
+<div class="container">
+    <div class="row py-5">
+        <div class="col-2"></div>
+        <div class="col-8" style="background-color: #f6f6f6;">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li th:each="theater : ${theaterList}">
+                    <a th:href="@{/theater/info/{tid}(tid=${theater.id})}" class="nav-link px-3 link-secondary" style="font-size: 20px;">[[${theater.name}]]</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h3 style="height: 40px; text-align: center; background: url(/images/bg_h3_line.jpg) repeat-x 0 50%;">
+                <img src="/images/h3_theater.gif" style="padding: 0 8px; background: white;"/>
+            </h3>
+        </div>
+    </div>
+    <div class="row py-4">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="row">
+                <p style="font-size: 24px; font-color: gray; font-weight: 550;">[[${theaterInfo.name}]]</p>
+            </div>
+            <div class="row ">
+                <div>주소 : [[${theaterInfo.address}]]</div>
+                <div>TEL : [[${theaterInfo.tel}]]</div>
+                <div>상영관 정보 : [[${theaterInfo.totalScreen}]]관 / [[${theaterInfo.totalSeat}]]석</div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+var main = {
+    init : function() {
+        var _this = this;
+
+    }
+}
+
+main.init();
+</script>
+
+</body>
+</html>

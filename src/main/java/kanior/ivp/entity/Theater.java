@@ -18,12 +18,8 @@ public class Theater {
     @Column(nullable = false)
     private String name;
 
-    private String photo;
-
     private String address;
 
     private String tel;
 
-    @Column(nullable = false)
-    private String region;
 }

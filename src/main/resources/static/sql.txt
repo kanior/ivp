@@ -93,49 +93,33 @@ INSERT INTO `ivp`.`movie_actor` (`actor_id`, `movie_id`) VALUES ('21', '9');
 
 
 
+INSERT INTO `ivp`.`theater` (`address`, `name`, `tel`) VALUES ('서울특별시 강남구 역삼동 814-6 스타플렉스', 'IVP강남', '02-1544-1122');
+INSERT INTO `ivp`.`theater` (`address`, `name`, `tel`) VALUES ('서울시 중구 을지로6가 17-2 현대시티아울렛 10층', 'IVP동대문', '02-1544-1122');
+INSERT INTO `ivp`.`theater` (`address`, `name`, `tel`) VALUES ('서울특별시 성동구 행당동 168-1 왕십리 민자역사 5층', 'IVP왕십리', '02-1544-1122');
 
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('1관[박서함관] 6층', '2D', '124', '1');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('2관 6층', '2D', '158', '1');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('3관 8층', '2D', '172', '1');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('4관[LCK관] 8층', '2D', '124', '1');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('1관 10층', '2D', '135', '2');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('2관 10층', '2D', '128', '2');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('3관 10층', '2D', '75', '2');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('씨네앤리빙룸', '2D', '50', '3');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('4DX', '4DX SCREEN 2D', '112', '3');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('IMAX', 'IMAX 2D', '303', '3');
+INSERT INTO `ivp`.`screen` (`name`, `seat_type`, `seating_capacity`, `theater_id`) VALUES ('GOLD CLASS', '2D', '30', '3');
 
+ALTER TABLE `ivp`.`screen` 
+ADD COLUMN `seat_price` INT NOT NULL AFTER `theater_id`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '1');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '2');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '3');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '4');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '5');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '6');
+UPDATE `ivp`.`screen` SET `seat_price` = '10000' WHERE (`screen_id` = '7');
+UPDATE `ivp`.`screen` SET `seat_price` = '11000' WHERE (`screen_id` = '8');
+UPDATE `ivp`.`screen` SET `seat_price` = '14000' WHERE (`screen_id` = '9');
+UPDATE `ivp`.`screen` SET `seat_price` = '15000' WHERE (`screen_id` = '10');
+UPDATE `ivp`.`screen` SET `seat_price` = '20000' WHERE (`screen_id` = '11');

@@ -4,12 +4,12 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" style="font-size: 17px;">
                 <li><a href="/" class="nav-link px-3 link-secondary">Home</a></li>
                 <li><a href="/movie/list" class="nav-link px-3 link-dark">영화</a></li>
-                <li><a href="#" class="nav-link px-3 link-dark">극장</a></li>
+                <li><a href="/theater/info/1" class="nav-link px-3 link-dark">극장</a></li>
                 <li><a href="#" class="nav-link px-3 link-dark">예매</a></li>
-                <li><a href="#" class="nav-link px-3 link-dark">게시판</a></li>
+                <li><a href="/screeningSchedule/save" class="nav-link px-3 link-danger">영화 상영 등록</a></li>
             </ul>
 
             <div class="text-end" th:if="${session.loginUser eq null}">
@@ -18,7 +18,7 @@
             </div>
 
             <div class="text-end" th:if="${session.loginUser ne null}">
-                [[${session.loginUser.name}]]님, 환영합니다.
+                [[${session.loginUser.name}]]님, 환영합니다.&nbsp;&nbsp;
                 <a role="button" class="btn btn-outline-primary me-2" href="/user/info">내 정보</a>
                 <a role="button" class="btn btn-primary" href="/user/logout">로그아웃</a>
             </div>

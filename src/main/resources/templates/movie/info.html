@@ -14,29 +14,29 @@
     <div class="row py-5">
         <div class="col-2"></div>
         <div class="col-2">
-            <img th:src="@{/images/movie/{poster}(poster=${movie.poster})}" style="width: 197px; height: 260px;">
+            <img th:src="@{/images/movie/{poster}(poster=${movieInfo.poster})}" style="width: 197px; height: 260px;">
         </div>
         <div class="col-6">
             <div class="row">
-                <p style="font-size: 24px; font-color: gray; font-weight: 550;">[[${movie.name}]]</p>
+                <p style="font-size: 24px; font-color: gray; font-weight: 550;">[[${movieInfo.name}]]</p>
             </div>
             <div class="row ">
-                <div>감독 : [[${movie.director}]] / 배우 : [[${movie.actors}]]</div>
-                <div>장르 : [[${movie.genre}]] / 기본 : [[${movie.rating}]], [[${movie.runningTime}]], [[${movie.nation}]]</div>
-                <div>개봉 : [[${movie.releaseDate}]]</div>
+                <div>감독 : [[${movieInfo.director}]] / 배우 : [[${movieInfo.actors}]]</div>
+                <div>장르 : [[${movieInfo.genre}]] / 기본 : [[${movieInfo.rating}]], [[${movieInfo.runningTime}]], [[${movieInfo.nation}]]</div>
+                <div>개봉 : [[${movieInfo.releaseDate}]]</div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-2"></div>
         <div class="col-8 py-4" style="background-color: #f6f6f6;">
-            <p th:utext="${movie.summary}" style="font-size: 14px;"></p>
+            <p th:utext="${movieInfo.summary}" style="font-size: 14px;"></p>
         </div>
     </div>
     <div class="row pt-5">
         <div class="col-2"></div>
         <div class="col-8">
-            <p>스틸컷 <span id="imageIdx">1</span> / <span id="totalImage" th:text="${movie.photos.size()}"></span></p>
+            <p>스틸컷 <span id="imageIdx">1</span> / <span id="totalImage" th:text="${movieInfo.photos.size()}"></span></p>
         </div>
     </div>
     <div class="row py-2">
@@ -51,7 +51,7 @@
         <div class="col-6" style="height: 450px;">
             <table style="height: 450px; width: 100%; vertical-align: middle;">
                 <tr><td style="text-align:center">
-                    <img class="stealImage" th:each="imageName : ${movie.photos}" th:src="@{/images/movie/{name}(name=${imageName})}" style="max-width: 100%; max-height: 450px; display: none;" />
+                    <img class="stealImage" th:each="imageName : ${movieInfo.photos}" th:src="@{/images/movie/{name}(name=${imageName})}" style="max-width: 100%; max-height: 450px; display: none;" />
                 </td></tr>
             </table>
 
@@ -63,7 +63,7 @@
                 </td></tr>
             </table>
         </div>
-        <div class="imagePath" style="display: none;" th:each="path : ${movie.photos}">[[${path}]]</div>
+        <div class="imagePath" style="display: none;" th:each="path : ${movieInfo.photos}">[[${path}]]</div>
     </div>
 
 
