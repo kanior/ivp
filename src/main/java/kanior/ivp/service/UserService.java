@@ -22,14 +22,7 @@ public class UserService {
 
     @Transactional
     public Long save(UserSaveRequest form) {
-        return userRepository.save(User.builder()
-                .loginId(form.getLoginId())
-                .password(form.getPassword())
-                .name(form.getName())
-                .birthDate(form.getBirthDate())
-                .role(UserRole.USER)
-                .build()
-        ).getId();
+        return userRepository.save(form.toEntity()).getId();
     }
 
     public LoginUserInfo login(String loginId, String password) {

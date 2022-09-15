@@ -1,5 +1,7 @@
 package kanior.ivp.dto;
 
+import kanior.ivp.entity.User;
+import kanior.ivp.entity.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +30,14 @@ public class UserSaveRequest {
     @NotBlank
     @Pattern(regexp = "(\\d{2})((0[1-9])|(1[0-2]))((0[1-9])|([1-2][0-9])|(3[0-1]))")
     private String birthDate;
+
+    public User toEntity() {
+        return User.builder()
+                .loginId(this.loginId)
+                .password(this.password)
+                .name(this.name)
+                .birthDate(this.birthDate)
+                .role(UserRole.USER)
+                .build();
+    }
 }

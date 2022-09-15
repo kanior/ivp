@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
 public class TheaterService {
 
     private final TheaterRepository theaterRepository;
     private final ScreenRepository screenRepository;
 
-    public List<TheaterListResponse> findList() {
-        return theaterRepository.findAll().stream()
-                .map(TheaterListResponse::new)
+    public List<TheaterListResponse> findAll() {
+        return theaterRepository.findAll()
+                .stream().map(TheaterListResponse::new)
                 .collect(Collectors.toList());
     }
 
@@ -30,9 +30,6 @@ public class TheaterService {
         Theater theater = theaterRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 극장 정보가 존재하지 않습니다. id=" + id));
 
-        Integer totalScreen = screenRepository.countByTheaterId(id);
-        Integer totalSeat = screenRepository.sumSeatingCapacityByTheaterId(id);
-
-        return new TheaterInfoResponse(theater, totalScreen, totalSeat);
+        return new TheaterInfoResponse(theater);
     }
 }

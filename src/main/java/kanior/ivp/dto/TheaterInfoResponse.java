@@ -12,15 +12,9 @@ public class TheaterInfoResponse {
 
     private String tel;
 
-    private Integer totalScreen;
-
-    private Integer totalSeat;
-
-    public TheaterInfoResponse(Theater theater, Integer totalScreen, Integer totalSeat) {
-        this.name = theater.getName();
-        this.address = theater.getAddress();
-        this.tel = theater.getTel();
-        this.totalScreen = totalScreen;
-        this.totalSeat = totalSeat;
+    public TheaterInfoResponse(Theater entity) {
+        this.name = entity.getName();
+        this.address = entity.getAddress();
+        this.tel = entity.getTel();
     }
 }

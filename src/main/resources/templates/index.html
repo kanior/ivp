@@ -13,6 +13,19 @@
 
 <div th:replace="fragments/header::header"/>
 
+<script>
+var sPageURL = window.location.search.substring(1);
+var sURLVariables = sPageURL.split('&');
+var sParameterName;
+var i;
 
+for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split('=');
+
+    if (sParameterName[0] === 'newUser' && sParameterName[1] === 'true') {
+         alert('회원가입이 완료되었습니다!\n로그인을 해주세요.');
+    }
+}
+</script>
 </body>
 </html>

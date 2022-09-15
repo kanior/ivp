@@ -1,5 +1,6 @@
 package kanior.ivp.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,4 +30,12 @@ public class ScreeningSchedule {
 
     @Column(nullable = false)
     private Integer remainingSeat;
+
+    @Builder
+    public ScreeningSchedule(Movie movie, Screen screen, LocalDateTime screeningDate, Integer remainingSeat) {
+        this.movie = movie;
+        this.screen = screen;
+        this.screeningDate = screeningDate;
+        this.remainingSeat = remainingSeat;
+    }
 }
