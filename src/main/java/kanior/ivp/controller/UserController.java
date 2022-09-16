@@ -79,12 +79,24 @@ public class UserController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(@RequestParam(defaultValue = "/") String redirectURL, HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
+    }
+
+    @GetMapping("/info")
+    public String readInfo(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return "redirect:/";
+        }
+
+        //회원 정보 조회하여 model에 등록
+
+        return "user/info";
     }
 }

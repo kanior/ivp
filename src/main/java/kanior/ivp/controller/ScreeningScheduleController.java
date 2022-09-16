@@ -1,6 +1,5 @@
 package kanior.ivp.controller;
 
-import kanior.ivp.dto.MovieListResponse;
 import kanior.ivp.dto.ScreeningScheduleSaveRequest;
 import kanior.ivp.service.MovieService;
 import kanior.ivp.service.ScreeningScheduleService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -28,7 +26,7 @@ public class ScreeningScheduleController {
     private final ScreeningScheduleService screeningScheduleService;
 
     @GetMapping("/save")
-    public String saveForm(Model model) {
+    public String saveForm(Model model){
         model.addAttribute("movieList", movieService.findAll());
         model.addAttribute("theaterList", theaterService.findAll());
         model.addAttribute("schedule", new ScreeningScheduleSaveRequest());
