@@ -7,9 +7,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static kanior.ivp.entity.QMovie.movie;
+import static kanior.ivp.entity.QScreeningSchedule.screeningSchedule;
 
 public class MovieRepositoryImpl implements MovieRepositoryCustom {
 
@@ -34,5 +36,14 @@ public class MovieRepositoryImpl implements MovieRepositoryCustom {
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
+    }
+
+    public List<Movie> findAllJoinScreeningSchedule(LocalDateTime now) {
+        return queryFactory
+                .select(movie).distinct()
+                .from(movie)
+                .join(screeningSchedule).on(screeningSchedule.movie.eq(movie))
+                .where(screeningSchedule.screeningDate.after(now))
+                .fetch();
     }
 }

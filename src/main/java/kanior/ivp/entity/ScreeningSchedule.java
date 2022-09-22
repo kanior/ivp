@@ -38,4 +38,18 @@ public class ScreeningSchedule {
         this.screeningDate = screeningDate;
         this.remainingSeat = remainingSeat;
     }
+
+
+    // 비즈니스 로직 //
+
+    /**
+     * 예매
+     */
+    public boolean reservation(int count) {
+        if (remainingSeat < count) {
+            return false;
+        }
+        remainingSeat -= count;
+        return true;
+    }
 }

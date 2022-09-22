@@ -1,10 +1,157 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>IVP - 영화 예매</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        form .row {
+            margin: 0px 0px 15px 0px;
+        }
+    </style>
 </head>
 <body>
 
+<div th:replace="fragments/header::header"/>
+
+<div class="container" style="max-width: 560px;">
+
+    <div class="py-5 text-center">
+        <h2>영화 예매</h2>
+    </div>
+
+    <form action="/" th:action th:object="${reservation}" method="post">
+        <div class="row">
+            <div th:text="#{label.reservation.movie}">영화 선택</div>
+            <select id="movieId" class="form-select">
+                <option value="">== 영화 목록 ==</option>
+                <option th:each="movie : ${movieList}" th:value="${movie.id}">
+                    [[${movie.name}]] // [[${movie.runningTime}]]분 // [[${movie.releaseDate}]] 개봉 // [[${movie.rating}]]
+                </option>
+            </select>
+        </div>
+        <div class="row">
+            <div th:text="#{label.reservation.theater}">극장 선택</div>
+            <select id="theaterId" class="form-select">
+                <option value="">== 극장 목록 ==</option>
+                <option th:each="theater : ${theaterList}" th:value="${theater.id}">
+                    [[${theater.name}]]
+                </option>
+            </select>
+        </div>
+        <div class="row">
+            <div th:text="#{label.reservation.screeningDate}">상영일 선택</div>
+            <select id="screeningDate" class="form-select">
+                <option th:each="added : ${#numbers.sequence(0,14)}" th:value="${today.plusDays(added)}">
+                    [[${#temporals.format(today.plusDays(added), 'yyyy-MM-dd')}]]
+                </option>
+            </select>
+        </div>
+        <div class="row">
+            <div th:text="#{label.reservation.screeningTime}">상영시간 선택</div>
+            <select th:field="*{screeningScheduleId}" class="form-select">
+                <option value="">== 상영시간 ==</option>
+            </select>
+        </div>
+        <div class="row">
+            <div th:text="#{label.reservation.count}">인원수 선택</div>
+            <select th:field="*{reserveCount}" class="form-select">
+                <option th:each="count : ${#numbers.sequence(1,9)}" th:value="${count}">[[${count}]]</option>
+            </select>
+        </div>
+
+        <input type="hidden" name="userLoginId" th:value="${session.loginUser.loginId}">
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">예매</button>
+            </div>
+            <div class="col">
+                <a class="w-100 btn btn-secondary btn-lg" href="/" role="button">취소</a>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+var main = {
+    init : function() {
+        var _this = this;
+        $('#movieId').on('change', function() {
+            _this.loadScreeningTime();
+        });
+        $('#theaterId').on('change', function() {
+            _this.loadScreeningTime();
+        });
+        $('#screeningDate').on('change', function() {
+            _this.loadScreeningTime();
+        });
+
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        var sParameterName;
+        var i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === 'empty' && sParameterName[1] === 'true') {
+                 alert('예매 정보를 모두 입력해주세요.');
+            }
+            if (sParameterName[0] === 'quantityError' && sParameterName[1] === 'true') {
+                 alert('예매 인원수가 잔여 좌석보다 많습니다.\n예매 정보를 다시 입력해주세요.');
+            }
+        }
+    },
+    loadScreeningTime : function() {
+        $('#screeningScheduleId').get()[0].innerHTML = '<option value="">== 상영시간 ==</option>';
+        console.log('loadScreeningTime function start!')
+        var data = {
+            movieId: $('#movieId').val(),
+            theaterId: $('#theaterId').val(),
+            screeningDate: $('#screeningDate').val()
+        };
+        console.log('data = ' + data)
+
+        if (data.movieId != '' && data.theaterId != '' && data.screeningDate != '') {
+            console.log('if access')
+            $.ajax({
+                type: 'GET',
+                url: '/api/screeningSchedule/list',
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                data: data
+            }).done(function(screeningScheduleList) {
+                console.log('ajax done start')
+                for (var screeningSchedule of screeningScheduleList) {
+                    var child =
+                        '<option value="' + screeningSchedule.id + '">'
+                        + screeningSchedule.screeningHour + ':' + screeningSchedule.screeningMinute
+                        + ' ['
+                        + screeningSchedule.screenSeatType + ', '
+                        + screeningSchedule.screenName + ', '
+                        + '잔여석: ' + screeningSchedule.remainingSeat + '석, '
+                        + '총: ' + screeningSchedule.screenSeatingCapacity + '석, '
+                        + '가격: ' + screeningSchedule.screenSeatPrice + '원]</option>';
+                    $('#screeningScheduleId').append(child);
+                }
+            }).fail(function(error) {
+            });
+        }
+    }
+}
+
+main.init();
+</script>
 </body>
 </html>

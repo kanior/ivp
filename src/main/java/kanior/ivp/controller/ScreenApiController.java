@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/screen")
-public class ScreenRestController {
+public class ScreenApiController {
 
     private final ScreenService screenService;
 

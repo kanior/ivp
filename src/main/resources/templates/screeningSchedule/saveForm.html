@@ -60,7 +60,7 @@
             </select>
         </div>
         <div class="row">
-            <div th:text="#{label.schedule.screeningHourAndMin}">상영시간 선택</div>
+            <div th:text="#{label.schedule.screeningTime}">상영시간 선택</div>
             <select name="screeningHour" class="form-select" style="display: inline; width: 50%;">
                 <option th:each="hour : ${#numbers.sequence(0,23)}" th:value="${hour}">
                     [[${#numbers.formatInteger(hour, 2)}]]시
@@ -123,20 +123,22 @@ var main = {
         var theaterId = $('#theaterId').val();
         $('#screen').get()[0].innerHTML = '<option value="">== 상영관 목록 ==</option>';
 
-        $.ajax({
-            type: 'GET',
-            url: '/api/screen/list/' + theaterId,
-            dataType: 'json',
-            contentType: 'application/json; charset=UTF-8'
-        }).done(function(screenList) {
-            for (var screen of screenList) {
-                var child = '<option value="' + screen.id + ',' + screen.seatingCapacity + '">' + screen.name + ' // ' + screen.seatType + ' // ' + screen.seatingCapacity + '석 // ' + screen.seatPrice + '원</option>';
-                $('#screen').append(child);
-            }
-            $('#screenId').get()[0].value= '';
-            $('#remainingSeat').get()[0].value = '';
-        }).fail(function(error) {
-        });
+        if (theaterId != '') {
+            $.ajax({
+                type: 'GET',
+                url: '/api/screen/list/' + theaterId,
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8'
+            }).done(function(screenList) {
+                for (var screen of screenList) {
+                    var child = '<option value="' + screen.id + ',' + screen.seatingCapacity + '">' + screen.name + ' // ' + screen.seatType + ' // ' + screen.seatingCapacity + '석 // ' + screen.seatPrice + '원</option>';
+                    $('#screen').append(child);
+                }
+                $('#screenId').get()[0].value= '';
+                $('#remainingSeat').get()[0].value = '';
+            }).fail(function(error) {
+            });
+        }
     },
     setScreenInfo : function() {
         var screenInfo = $('#screen').val();
@@ -152,7 +154,6 @@ var main = {
 }
 
 main.init();
-
 </script>
 </body>
 </html>

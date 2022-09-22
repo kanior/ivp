@@ -1,5 +1,6 @@
 package kanior.ivp.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,4 +26,11 @@ public class Reservation {
 
     @Column(nullable = false)
     private Integer reserveCount;
+
+    @Builder
+    public Reservation(User user, ScreeningSchedule screeningSchedule, Integer reserveCount) {
+        this.user = user;
+        this.screeningSchedule = screeningSchedule;
+        this.reserveCount = reserveCount;
+    }
 }

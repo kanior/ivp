@@ -22,8 +22,8 @@ public class ActorRepositoryImpl implements ActorRepositoryCustom {
     public List<Actor> findAllByMovieId(Long movieId) {
         return queryFactory
                 .selectFrom(actor)
-                .join(movieActor).on(movieActor.actor.id.eq(actor.id))
-                .join(movie).on(movieActor.movie.id.eq(movie.id))
+                .join(movieActor).on(movieActor.actor.eq(actor))
+                .join(movie).on(movieActor.movie.eq(movie))
                 .where(movie.id.eq(movieId))
                 .fetch();
     }

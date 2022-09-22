@@ -1,5 +1,6 @@
 package kanior.ivp.service;
 
+import kanior.ivp.dto.ScreeningScheduleListResponse;
 import kanior.ivp.dto.ScreeningScheduleSaveRequest;
 import kanior.ivp.entity.Movie;
 import kanior.ivp.entity.Screen;
@@ -7,12 +8,14 @@ import kanior.ivp.entity.ScreeningSchedule;
 import kanior.ivp.repository.MovieRepository;
 import kanior.ivp.repository.ScreenRepository;
 import kanior.ivp.repository.ScreeningScheduleRepository;
+import kanior.ivp.repository.TheaterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,10 +24,11 @@ public class ScreeningScheduleService {
 
     private final ScreeningScheduleRepository screeningScheduleRepository;
     private final MovieRepository movieRepository;
+    private final TheaterRepository theaterRepository;
     private final ScreenRepository screenRepository;
 
     public boolean isScreeningScheduleDuplicated(ScreeningScheduleSaveRequest schedule) {
-        List<ScreeningSchedule> list = screeningScheduleRepository.findByScreenIdAndScreeningDate(schedule.getScreenId(), LocalDateTime.parse(schedule.getScreeningDate()));
+        List<ScreeningSchedule> list = screeningScheduleRepository.findAllByScreenIdAndScreeningDate(schedule.getScreenId(), LocalDateTime.parse(schedule.getScreeningDate()));
 
         Movie movie = movieRepository.findById(schedule.getMovieId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 영화 정보가 존재하지 않습니다. id=" + schedule.getMovieId()));
@@ -54,4 +58,9 @@ public class ScreeningScheduleService {
 
         return screeningScheduleRepository.save(form.toEntity(movie, screen)).getId();
     }
+
+    public List<ScreeningScheduleListResponse> findAllByMovieIdAndScreenIdAndScreeningDate(Long movieId, Long theaterId, LocalDateTime screeningDate) {
+        return screeningScheduleRepository.findAllByMovieIdAndScreenIdAndScreeningDate(movieId, theaterId, screeningDate);
+    }
+
 }

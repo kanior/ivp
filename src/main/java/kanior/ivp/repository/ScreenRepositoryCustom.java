@@ -11,4 +11,5 @@ public interface ScreenRepositoryCustom {
     Integer sumSeatingCapacityByTheaterId(Long theaterId);
 
     List<Screen> findAllByTheaterId(Long theaterId);
+
 }
