@@ -9,7 +9,7 @@
                 <li><a href="/movie/list" class="nav-link px-3 link-dark">영화</a></li>
                 <li><a href="/theater/info/1" class="nav-link px-3 link-dark">극장</a></li>
                 <li><a href="/reservation/save" class="nav-link px-3 link-dark">예매</a></li>
-                <li><a href="/screeningSchedule/save" class="nav-link px-3 link-danger">상영 스케줄 등록</a></li>
+                <li th:if="${session.loginUser ne null and session.loginUser.role.toString().equals('ADMIN')}"><a href="/screeningSchedule/save" class="nav-link px-3 link-danger">상영 스케줄 등록</a></li>
             </ul>
 
             <div class="text-end" th:if="${session.loginUser eq null}">

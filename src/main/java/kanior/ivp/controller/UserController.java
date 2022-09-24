@@ -1,8 +1,6 @@
 package kanior.ivp.controller;
 
-import kanior.ivp.dto.LoginUserInfo;
-import kanior.ivp.dto.UserLoginRequest;
-import kanior.ivp.dto.UserSaveRequest;
+import kanior.ivp.dto.*;
 import kanior.ivp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -91,12 +89,51 @@ public class UserController {
     @GetMapping("/info")
     public String readInfo(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession(false);
-        if (session == null) {
+        if (session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
             return "redirect:/";
         }
 
         //회원 정보 조회하여 model에 등록
+        String loginId = ((LoginUserInfo) session.getAttribute(SessionConst.LOGIN_USER)).getLoginId();
+        UserInfoResponse userInfo = userService.findInfoByLoginId(loginId);
+        model.addAttribute("userInfo", userInfo);
 
         return "user/info";
+    }
+
+    @GetMapping("/modifyPassword")
+    public String modifyPasswordForm(HttpServletRequest request, Model model) {
+        model.addAttribute("modifyPassword", new UserPasswordModifyRequest());
+        return "user/modifyPasswordForm";
+    }
+
+    @PostMapping("/modifyPassword")
+    public String modifyPassword(@Validated @ModelAttribute("modifyPassword") UserPasswordModifyRequest form, BindingResult bindingResult, HttpServletRequest request, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "user/modifyPasswordForm";
+        }
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
+            return "redirect:/";
+        }
+
+        //현재 비밀번호를 맞게 입력했는지 확인
+        String loginId = ((LoginUserInfo) session.getAttribute(SessionConst.LOGIN_USER)).getLoginId();
+        LoginUserInfo loginUserInfo = userService.login(loginId, form.getOldPassword());
+        if (loginUserInfo == null) {
+            bindingResult.rejectValue("oldPassword", "Valid");
+            return "user/modifyPasswordForm";
+        }
+
+        //새 패스워드 검사
+        if (!form.getNewPassword().equals(form.getNewPasswordCheck())) {
+            bindingResult.rejectValue("newPasswordCheck", "Equal");
+            return "user/modifyPasswordForm";
+        }
+
+        userService.modifyPassword(loginId, form.getNewPassword());
+
+        return "redirect:/user/info?modifyPassword=true";
     }
 }

@@ -13,13 +13,16 @@
         form .row {
             margin: 0px 0px 15px 0px;
         }
+        .my-container {
+            max-width: 560px;
+        }
     </style>
 </head>
 <body>
 
 <div th:replace="fragments/header::header"/>
 
-<div class="container" style="max-width: 560px;">
+<div class="container my-container">
 
     <div class="py-5 text-center">
         <h2>영화 예매</h2>

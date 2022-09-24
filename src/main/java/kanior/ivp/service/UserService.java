@@ -1,6 +1,7 @@
 package kanior.ivp.service;
 
 import kanior.ivp.dto.LoginUserInfo;
+import kanior.ivp.dto.UserInfoResponse;
 import kanior.ivp.dto.UserSaveRequest;
 import kanior.ivp.entity.User;
 import kanior.ivp.entity.UserRole;
@@ -25,11 +26,25 @@ public class UserService {
         return userRepository.save(form.toEntity()).getId();
     }
 
+    @Transactional
+    public Long modifyPassword(String loginId, String password) {
+        return userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다. loginId=" + loginId))
+                .setPassword(password)
+                .getId();
+    }
+
     public LoginUserInfo login(String loginId, String password) {
         return userRepository.findByLoginId(loginId)
                 .filter(m -> m.getPassword().equals(password))
                 .map(LoginUserInfo::new)
                 .orElse(null);
+    }
+
+    public UserInfoResponse findInfoByLoginId(String loginId) {
+        return userRepository.findByLoginId(loginId)
+                .map(UserInfoResponse::new)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다. loginId=" + loginId));
     }
 
 }

@@ -6,9 +6,6 @@
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .container {
-            max-width: 560px;
-        }
         .field-error {
             border-color: #dc3545;
             color: #dc3545;
@@ -16,11 +13,16 @@
         .row {
             margin: 0px 0px 15px 0px;
         }
+        .my-container {
+            max-width: 560px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div th:replace="fragments/header::header"/>
+
+<div class="container my-container">
 
     <div class="py-5 text-center">
         <h2>상영 스케줄 등록</h2>

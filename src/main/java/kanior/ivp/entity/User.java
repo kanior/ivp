@@ -40,4 +40,9 @@ public class User extends BaseTimeEntity{
         this.birthDate = birthDate;
         this.role = role;
     }
+
+    public User setPassword(String password) {
+        this.password = password;
+        return this;
+    }
 }
