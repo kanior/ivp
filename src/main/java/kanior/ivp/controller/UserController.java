@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -132,8 +133,48 @@ public class UserController {
             return "user/modifyPasswordForm";
         }
 
+        //기존 패스워드와 새 패스워드가 같은지 검사
+        if (form.getOldPassword().equals(form.getNewPassword())) {
+            bindingResult.rejectValue("newPassword", "NotSame");
+            return "user/modifyPasswordForm";
+        }
+
         userService.modifyPassword(loginId, form.getNewPassword());
 
         return "redirect:/user/info?modifyPassword=true";
     }
+
+    @GetMapping("/delete")
+    public String deleteForm() {
+        return "user/deleteForm";
+    }
+
+    @PostMapping("/delete")
+    public String delete(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
+            return "redirect:/";
+        }
+
+        String loginId = ((LoginUserInfo) session.getAttribute(SessionConst.LOGIN_USER)).getLoginId();
+        session.invalidate();
+
+        userService.delete(loginId);
+
+        return "redirect:/?userDelete=true";
+    }
+
+    @GetMapping("/reservationList")
+    public String reservationList(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute(SessionConst.LOGIN_USER) == null) {
+            return "redirect:/";
+        }
+
+        String loginId = ((LoginUserInfo) session.getAttribute(SessionConst.LOGIN_USER)).getLoginId();
+        List<ReservationListResponse> reservationList = userService.findAllReservationByLoginId(loginId);
+        model.addAttribute("reservationList", reservationList);
+        return "user/reservationList";
+    }
+
 }

@@ -25,8 +25,11 @@ public class ReservationSaveRequest {
     public Reservation toEntity(User user, ScreeningSchedule screeningSchedule) {
         return Reservation.builder()
                 .user(user)
-                .screeningSchedule(screeningSchedule)
                 .reserveCount(this.reserveCount)
+                .screeningSchedule(screeningSchedule)
+                .movie(screeningSchedule.getMovie())
+                .theater(screeningSchedule.getScreen().getTheater())
+                .screen(screeningSchedule.getScreen())
                 .build();
     }
 }

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>IVP - 회원 탈퇴</title>
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        .row {
+            margin: 0px 0px 15px 0px;
+        }
+        .my-container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/header::header"/>
+
+<div class="container my-container">
+
+  <div class="py-5 text-center">
+    <h2>회원 탈퇴</h2>
+  </div>
+
+  <form action="/" th:action th:object="${user}" method="post">
+    <div class="row">
+      <p style="text-align: center;">회원 탈퇴시 모든 회원 정보가 삭제됩니다. 탈퇴하시겠습니까?</p>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">회원 탈퇴</button>
+      </div>
+      <div class="col">
+        <a class="w-100 btn btn-secondary btn-lg" href="/" role="button">취소</a>
+      </div>
+    </div>
+
+  </form>
+
+</div> <!-- /container -->
+</body>
+</html>

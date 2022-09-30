@@ -3,7 +3,6 @@ package kanior.ivp.dto;
 import kanior.ivp.entity.User;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter

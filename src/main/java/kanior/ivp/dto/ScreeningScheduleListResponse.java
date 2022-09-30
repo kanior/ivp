@@ -25,14 +25,14 @@ public class ScreeningScheduleListResponse {
 
     private String screeningMinute;
 
-    public ScreeningScheduleListResponse(ScreeningSchedule screeningSchedule, Screen screen) {
-        this.id = screeningSchedule.getId();
-        this.remainingSeat = screeningSchedule.getRemainingSeat();
-        this.screeningHour = String.format("%02d", screeningSchedule.getScreeningDate().getHour());
-        this.screeningMinute = String.format("%02d", screeningSchedule.getScreeningDate().getMinute());
-        this.screenName = screen.getName();
-        this.screenSeatType = screen.getSeatType();
-        this.screenSeatingCapacity = screen.getSeatingCapacity();
-        this.screenSeatPrice = screen.getSeatPrice();
+    public ScreeningScheduleListResponse(ScreeningSchedule entity) {
+        this.id = entity.getId();
+        this.remainingSeat = entity.getRemainingSeat();
+        this.screeningHour = String.format("%02d", entity.getScreeningDate().getHour());
+        this.screeningMinute = String.format("%02d", entity.getScreeningDate().getMinute());
+        this.screenName = entity.getScreen().getName();
+        this.screenSeatType = entity.getScreen().getSeatType();
+        this.screenSeatingCapacity = entity.getScreen().getSeatingCapacity();
+        this.screenSeatPrice = entity.getScreen().getSeatPrice();
     }
 }

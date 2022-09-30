@@ -10,8 +10,8 @@ public class TheaterListResponse {
 
     private String name;
 
-    public TheaterListResponse(Theater theater) {
-        this.id = theater.getId();
-        this.name = theater.getName();
+    public TheaterListResponse(Theater entity) {
+        this.id = entity.getId();
+        this.name = entity.getName();
     }
 }

@@ -3,6 +3,7 @@ package kanior.ivp.dto;
 import kanior.ivp.entity.Movie;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class MovieInfoResponse {
 
     private String rating;
 
-    private String runningTime;
+    private Integer runningTime;
 
     private String nation;
 
@@ -37,9 +38,9 @@ public class MovieInfoResponse {
         this.director = entity.getDirector();
         this.genre = entity.getGenre();
         this.rating = entity.getRating();
-        this.runningTime = entity.getRunningTime().toString() + "분";
+        this.runningTime = entity.getRunningTime();
         this.nation = entity.getNation();
-        this.releaseDate = String.format("%d.%02d.%02d", entity.getReleaseDate().getYear(), entity.getReleaseDate().getMonthValue(), entity.getReleaseDate().getDayOfMonth());
+        this.releaseDate = entity.getReleaseDate().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
         this.poster = entity.getPhotos().split("\\\\")[0];
         this.photos = new ArrayList<>();
         String[] split = entity.getPhotos().split("\\\\");

@@ -1,6 +1,5 @@
 package kanior.ivp.repository;
 
-import kanior.ivp.dto.ScreeningScheduleListResponse;
 import kanior.ivp.entity.ScreeningSchedule;
 
 import java.time.LocalDateTime;
@@ -10,5 +9,5 @@ public interface ScreeningScheduleRepositoryCustom {
 
     List<ScreeningSchedule> findAllByScreenIdAndScreeningDate(Long screenId, LocalDateTime screeningDate);
 
-    List<ScreeningScheduleListResponse> findAllByMovieIdAndScreenIdAndScreeningDate(Long movieId, Long theaterId, LocalDateTime screeningDate);
+    List<ScreeningSchedule> findAllByMovieIdAndTheaterIdAndScreeningDate(Long movieId, Long theaterId, LocalDateTime screeningDate);
 }

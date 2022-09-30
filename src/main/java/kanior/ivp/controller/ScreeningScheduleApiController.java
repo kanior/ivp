@@ -1,7 +1,6 @@
 package kanior.ivp.controller;
 
 import kanior.ivp.dto.ScreeningScheduleListResponse;
-import kanior.ivp.service.ScreenService;
 import kanior.ivp.service.ScreeningScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +24,6 @@ public class ScreeningScheduleApiController {
             @RequestParam Long theaterId,
             @RequestParam String screeningDate) {
 
-        return screeningScheduleService.findAllByMovieIdAndScreenIdAndScreeningDate(movieId, theaterId, LocalDateTime.parse(screeningDate));
+        return screeningScheduleService.findAllByMovieIdAndTheaterIdAndScreeningDate(movieId, theaterId, LocalDateTime.parse(screeningDate));
     }
 }

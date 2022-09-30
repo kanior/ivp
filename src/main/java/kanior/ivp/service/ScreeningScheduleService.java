@@ -8,7 +8,6 @@ import kanior.ivp.entity.ScreeningSchedule;
 import kanior.ivp.repository.MovieRepository;
 import kanior.ivp.repository.ScreenRepository;
 import kanior.ivp.repository.ScreeningScheduleRepository;
-import kanior.ivp.repository.TheaterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +23,6 @@ public class ScreeningScheduleService {
 
     private final ScreeningScheduleRepository screeningScheduleRepository;
     private final MovieRepository movieRepository;
-    private final TheaterRepository theaterRepository;
     private final ScreenRepository screenRepository;
 
     public boolean isScreeningScheduleDuplicated(ScreeningScheduleSaveRequest schedule) {
@@ -59,8 +57,10 @@ public class ScreeningScheduleService {
         return screeningScheduleRepository.save(form.toEntity(movie, screen)).getId();
     }
 
-    public List<ScreeningScheduleListResponse> findAllByMovieIdAndScreenIdAndScreeningDate(Long movieId, Long theaterId, LocalDateTime screeningDate) {
-        return screeningScheduleRepository.findAllByMovieIdAndScreenIdAndScreeningDate(movieId, theaterId, screeningDate);
+    public List<ScreeningScheduleListResponse> findAllByMovieIdAndTheaterIdAndScreeningDate(Long movieId, Long theaterId, LocalDateTime screeningDate) {
+        return screeningScheduleRepository.findAllByMovieIdAndTheaterIdAndScreeningDate(movieId, theaterId, screeningDate)
+                .stream().map(ScreeningScheduleListResponse::new)
+                .collect(Collectors.toList());
     }
 
 }

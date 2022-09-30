@@ -52,4 +52,11 @@ public class ScreeningSchedule {
         remainingSeat -= count;
         return true;
     }
+
+    /**
+     * 예매 취소
+     */
+    public void cancel(int count) {
+        remainingSeat += count;
+    }
 }

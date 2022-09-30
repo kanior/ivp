@@ -2,13 +2,17 @@ package kanior.ivp.service;
 
 import kanior.ivp.dto.LoginUserInfo;
 import kanior.ivp.dto.UserInfoResponse;
+import kanior.ivp.dto.ReservationListResponse;
 import kanior.ivp.dto.UserSaveRequest;
 import kanior.ivp.entity.User;
-import kanior.ivp.entity.UserRole;
+import kanior.ivp.repository.ReservationRepository;
 import kanior.ivp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ReservationRepository reservationRepository;
 
     public boolean isLoginIdDuplicated(String loginId) {
         return !userRepository.findByLoginId(loginId).isEmpty();
@@ -47,4 +52,21 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다. loginId=" + loginId));
     }
 
+    @Transactional
+    public void delete(String loginId) {
+        User user = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다. loginId=" + loginId));
+
+        userRepository.delete(user);
+    }
+
+    public List<ReservationListResponse> findAllReservationByLoginId(String loginId) {
+        Long id = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 정보가 존재하지 않습니다. loginId=" + loginId))
+                .getId();
+
+        return reservationRepository.findAllByUserId(id)
+                .stream().map(ReservationListResponse::new)
+                .collect(Collectors.toList());
+    }
 }

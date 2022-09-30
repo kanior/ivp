@@ -4,6 +4,7 @@ import kanior.ivp.dto.MovieInfoResponse;
 import kanior.ivp.dto.MovieListResponse;
 import kanior.ivp.entity.Movie;
 import kanior.ivp.repository.MovieRepository;
+import kanior.ivp.repository.ScreeningScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,7 +40,7 @@ public class MovieService {
     }
 
     public List<MovieListResponse> findAllJoinScreeningSchedule(LocalDateTime now) {
-        return movieRepository.findAllJoinScreeningSchedule( now)
+        return movieRepository.findAllJoinScreeningSchedule(now)
                 .stream().map(MovieListResponse::new)
                 .collect(Collectors.toList());
     }
