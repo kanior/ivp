@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>IVP - 예매 내역</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/header::header"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-2 px-0">
+            <div class="row" style="height: 145px;"></div>
+            <table style="width: 80%; background: #f0f0f0; border-radius: 10px;">
+                <tr><td class="px-1" style="height: 50px; width: 100%; line-height: 100%; font-size: 17px;">
+                    <a class="nav-link link-dark" href="/user/info">내 정보</a>
+                </td></tr>
+                <tr><td class="px-1" style="height: 50px; width: 100%; line-height: 100%; font-size: 17px;">
+                    <a class="nav-link link-dark" href="/reservation/my/list">예매 내역</a>
+                </td></tr>
+            </table>
+        </div>
+        <div class="col-8">
+            <div class="row py-5">
+                <h2>예매 내역</h2>
+            </div>
+
+            <div th:each="reservation : ${reservationList}" class="row p-3 mb-4" style="border: 1px solid #ddd; border-radius: 10px;">
+                <div class="row">
+                    <p style="font-size: 24px; font-color: gray; font-weight: 550;">[[${reservation.reserveDate}]] 예매</p>
+                </div>
+                <div class="row">
+                    <div class="col-8 p-3" style="border: 1px solid #ddd; border-radius: 10px 1px 1px 10px;">
+                        <div class="py-1" style="font-size: 20px; font-color: gray; font-weight: 550;">[[${reservation.movieName}]]</div>
+                        <div>[[${reservation.movieRating}]], [[${reservation.movieRunningTime}]]분</div>
+                        <div>[[${reservation.theaterName}]] / [[${reservation.screenSeatType}]] / [[${reservation.screenName}]] / [[${reservation.reserveCount}]]석</div>
+                        <div>[[${reservation.screeningDate}]] 상영</div>
+                    </div>
+                    <div class="col-4 pt-5" style="border: 1px solid #ddd; border-radius: 1px 10px 10px 1px; text-align: center;">
+                        <div th:if="${reservation.isCanceled == 'true'}" role="button" class="btn btn-secondary w-75 btn-lg">취소 완료</div>
+                        <div th:if="${reservation.isCanceled == 'false' and reservation.isStartedAlready == 'true'}" role="button" class="btn btn-secondary w-75 btn-lg">관람 완료</div>
+                        <a th:if="${reservation.isCanceled == 'false' and reservation.isStartedAlready == 'false'}" role="button" class="btn btn-secondary w-75 btn-lg" th:href="@{/reservation/cancel/{rid}(rid=${reservation.reservationId})}">예매 취소</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+var sPageURL = window.location.search.substring(1);
+var sURLVariables = sPageURL.split('&');
+var sParameterName;
+var i;
+
+for (i = 0; i < sURLVariables.length; i++) {
+    sParameterName = sURLVariables[i].split('=');
+
+    if (sParameterName[0] === 'cancelReservation' && sParameterName[1] === 'true') {
+         alert('해당 예매가 취소되었습니다.');
+    }
+}
+</script>
+</body>
+</html>
+
+

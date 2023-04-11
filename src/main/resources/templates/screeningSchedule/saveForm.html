@@ -56,7 +56,7 @@
         <div class="row">
             <div th:text="#{label.schedule.screeningDate}">상영일 선택</div>
             <select name="screeningDate" class="form-select">
-                <option th:each="added : ${#numbers.sequence(1,14)}" th:value="${today.plusDays(added)}">
+                <option th:each="added : ${#numbers.sequence(1,14)}" th:value="${#temporals.format(today.plusDays(added), 'yyyy-MM-dd')}">
                     [[${#temporals.format(today.plusDays(added), 'yyyy-MM-dd')}]]
                 </option>
             </select>
@@ -64,12 +64,12 @@
         <div class="row">
             <div th:text="#{label.schedule.screeningTime}">상영시간 선택</div>
             <select name="screeningHour" class="form-select" style="display: inline; width: 50%;">
-                <option th:each="hour : ${#numbers.sequence(0,23)}" th:value="${hour}">
+                <option th:each="hour : ${#numbers.sequence(0,23)}" th:value="${#numbers.formatInteger(hour, 2)}">
                     [[${#numbers.formatInteger(hour, 2)}]]시
                 </option>
             </select>
             <select name="screeningMin" class="form-select" style="display: inline; width: 50%;">
-                <option th:each="min : ${#numbers.sequence(0,55, 5)}" th:value="${min}">
+                <option th:each="min : ${#numbers.sequence(0,55, 5)}" th:value="${#numbers.formatInteger(min, 2)}">
                     [[${#numbers.formatInteger(min, 2)}]]분
                 </option>
             </select>

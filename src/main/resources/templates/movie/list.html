@@ -24,9 +24,9 @@
         <div class="col-2"></div>
         <div class="col-2" th:each="movie : ${moviePage.content}">
             <div class="row ">
-                <a th:href="@{/movie/info/{mid}(mid=${movie.id})}"><img th:src="@{/images/movie/{poster}(poster=${movie.poster})}" style="width: 197px; height: 260px;"></a>
+                <a th:href="@{/movie/detail/{mid}(mid=${movie.id})}"><img th:src="@{/images/movie/{poster}(poster=${movie.poster})}" style="width: 197px; height: 260px;"></a>
             </div>
-            <div class="row"><a th:href="@{/movie/info/{mid}(mid=${movie.id})}"><strong>[[${movie.name}]]</strong></a></div>
+            <div class="row"><a th:href="@{/movie/detail/{mid}(mid=${movie.id})}"><strong>[[${movie.name}]]</strong></a></div>
             <div class="row"><strong style="font-size: 12px;">[[${movie.releaseDate}]] 개봉</strong></div>
             <div class="row"><strong style="font-size: 12px;">[[${movie.rating}]]</strong></div>
         </div>
