@@ -20,11 +20,11 @@ public class ScreeningSchedule {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id", nullable = false)
+    @JoinColumn(name = "movie_id")
     private Movie movie;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_id", nullable = false)
+    @JoinColumn(name = "screen_id")
     private Screen screen;
 
     @Column(nullable = false)

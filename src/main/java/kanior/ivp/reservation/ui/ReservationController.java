@@ -1,10 +1,7 @@
 package kanior.ivp.reservation.ui;
 
 import kanior.ivp.SessionConst;
-import kanior.ivp.reservation.command.application.CancelReservationRequest;
-import kanior.ivp.reservation.command.application.CancelReservationService;
-import kanior.ivp.reservation.command.application.SaveReservationRequest;
-import kanior.ivp.reservation.command.application.SaveReservationService;
+import kanior.ivp.reservation.command.application.*;
 import kanior.ivp.reservation.query.MyReservationDataDao;
 import kanior.ivp.reservation.ui.dto.MyReservationResponse;
 import kanior.ivp.reservation.ui.dto.ReservableMovieResponse;
@@ -29,6 +26,7 @@ import java.util.stream.Collectors;
 public class ReservationController {
 
     private final SaveReservationService saveReservationService;
+    private final SaveReservationFacade saveReservationFacade;
     private final CancelReservationService cancelReservationService;
     private final ScreeningScheduleDao screeningScheduleDao;
     private final MyReservationDataDao myReservationDataDao;
@@ -55,7 +53,7 @@ public class ReservationController {
     @PostMapping("/save")
     public String save(@Validated @ModelAttribute("reservation") SaveReservationForm form,
                        BindingResult bindingResult, Model model,
-                       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) LoginUserInfo loginUser) {
+                       @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) LoginUserInfo loginUser) throws InterruptedException {
 
         if (bindingResult.hasErrors()) {
             return "redirect:/reservation/save?empty=true";
@@ -65,7 +63,7 @@ public class ReservationController {
             return "redirect:/reservation/save?quantityError=true";
         }
 
-        saveReservationService.save(new SaveReservationRequest(loginUser.getLoginId(), form.getScreeningScheduleId(), form.getReserveCount()));
+        saveReservationFacade.save(new SaveReservationRequest(loginUser.getLoginId(), form.getScreeningScheduleId(), form.getReserveCount()));
         return "redirect:/?reservation=true";
     }
 
