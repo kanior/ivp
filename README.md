@@ -1,7 +1,4 @@
-# IVP 영화 예매 사이트 이용 방법
-
-- 접속 URL
-> ec2-52-79-129-143.ap-northeast-2.compute.amazonaws.com:8080
+# IVP 영화 예매 사이트 소개 (현재 접속 불가)
 
 - 회원가입 및 로그인 기능 이용 가능
 
